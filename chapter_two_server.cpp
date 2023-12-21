@@ -45,7 +45,8 @@ int main() {
   addr.sin_port = htons(1234);  // make sure to use network byte order
   addr.sin_addr.s_addr = htonl(INADDR_ANY);  // for binding to 0.0.0.0 wildcard address
   int rv = bind(fd, (struct sockaddr *)&addr, sizeof(addr)); // bind socket to the specified IP and port
-  if (rv) {
+  if (rv == -1) { // in C++ if (rv) will evaluate to true for any non-zero value ie. -1. 
+  // if (rv) == true if it fails. will use below
     die("bind() failed");
   }
 
